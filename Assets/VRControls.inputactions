@@ -1,0 +1,134 @@
+{
+    "name": "VRControls",
+    "maps": [
+        {
+            "name": "VR",
+            "id": "65d00bab-2cc4-41e7-b8f4-25d3e3e51570",
+            "actions": [
+                {
+                    "name": "LeftTriggerPressed",
+                    "type": "Button",
+                    "id": "1d6d984f-ea7b-4f0f-8f6f-f838311fce6e",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "RightTriggerPressed",
+                    "type": "Button",
+                    "id": "4e7f27d5-f92f-4690-ab9d-d7b41fd8a8b9",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "LeftGripPressed",
+                    "type": "Button",
+                    "id": "accd2642-ea4f-409f-86a8-e40db9510a78",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "RightGripPressed",
+                    "type": "Button",
+                    "id": "56e386a3-e275-4d96-874e-db851e658fd5",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "LeftButtonX",
+                    "type": "Button",
+                    "id": "6110a669-bd33-495c-b3f9-990e06d4cf38",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "RightButtonA",
+                    "type": "Button",
+                    "id": "ff015245-bf55-4a26-ad3d-6c7efb05ae78",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "f1412e4a-8b99-4be1-bc5e-d2ba940b4c6d",
+                    "path": "<XRController>{LeftHand}/{TriggerButton}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LeftTriggerPressed",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "48b2b340-66c4-4f5f-b545-8b3c8c3bfd4b",
+                    "path": "<XRController>{RightHand}/{TriggerButton}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RightTriggerPressed",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d78faf76-34be-4faa-80fd-02b53853a0be",
+                    "path": "<XRController>{LeftHand}/{GripButton}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LeftGripPressed",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8d0dc200-deb3-47ed-97f0-0e441c5df5be",
+                    "path": "<XRController>{RightHand}/{GripButton}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RightGripPressed",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1a950189-0d56-48fe-9cad-13e12cb97442",
+                    "path": "<XRController>{LeftHand}/{PrimaryButton}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LeftButtonX",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "135d5418-51a2-4194-9ee4-9d03f1527489",
+                    "path": "<XRController>{RightHand}/{PrimaryButton}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RightButtonA",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
