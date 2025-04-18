@@ -80,6 +80,15 @@ public partial class @VRControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""LeftMenu"",
+                    ""type"": ""Button"",
+                    ""id"": ""a7083e5a-6f52-4fa5-a136-7de24e0f3039"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -148,6 +157,17 @@ public partial class @VRControls: IInputActionCollection2, IDisposable
                     ""action"": ""RightButtonA"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f507b62e-ad4b-453e-914f-fff169b21ad5"",
+                    ""path"": ""<XRController>{LeftHand}/{MenuButton}"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LeftMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -162,6 +182,7 @@ public partial class @VRControls: IInputActionCollection2, IDisposable
         m_VR_RightGripPressed = m_VR.FindAction("RightGripPressed", throwIfNotFound: true);
         m_VR_LeftButtonX = m_VR.FindAction("LeftButtonX", throwIfNotFound: true);
         m_VR_RightButtonA = m_VR.FindAction("RightButtonA", throwIfNotFound: true);
+        m_VR_LeftMenu = m_VR.FindAction("LeftMenu", throwIfNotFound: true);
     }
 
     ~@VRControls()
@@ -234,6 +255,7 @@ public partial class @VRControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_VR_RightGripPressed;
     private readonly InputAction m_VR_LeftButtonX;
     private readonly InputAction m_VR_RightButtonA;
+    private readonly InputAction m_VR_LeftMenu;
     public struct VRActions
     {
         private @VRControls m_Wrapper;
@@ -244,6 +266,7 @@ public partial class @VRControls: IInputActionCollection2, IDisposable
         public InputAction @RightGripPressed => m_Wrapper.m_VR_RightGripPressed;
         public InputAction @LeftButtonX => m_Wrapper.m_VR_LeftButtonX;
         public InputAction @RightButtonA => m_Wrapper.m_VR_RightButtonA;
+        public InputAction @LeftMenu => m_Wrapper.m_VR_LeftMenu;
         public InputActionMap Get() { return m_Wrapper.m_VR; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -271,6 +294,9 @@ public partial class @VRControls: IInputActionCollection2, IDisposable
             @RightButtonA.started += instance.OnRightButtonA;
             @RightButtonA.performed += instance.OnRightButtonA;
             @RightButtonA.canceled += instance.OnRightButtonA;
+            @LeftMenu.started += instance.OnLeftMenu;
+            @LeftMenu.performed += instance.OnLeftMenu;
+            @LeftMenu.canceled += instance.OnLeftMenu;
         }
 
         private void UnregisterCallbacks(IVRActions instance)
@@ -293,6 +319,9 @@ public partial class @VRControls: IInputActionCollection2, IDisposable
             @RightButtonA.started -= instance.OnRightButtonA;
             @RightButtonA.performed -= instance.OnRightButtonA;
             @RightButtonA.canceled -= instance.OnRightButtonA;
+            @LeftMenu.started -= instance.OnLeftMenu;
+            @LeftMenu.performed -= instance.OnLeftMenu;
+            @LeftMenu.canceled -= instance.OnLeftMenu;
         }
 
         public void RemoveCallbacks(IVRActions instance)
@@ -318,5 +347,6 @@ public partial class @VRControls: IInputActionCollection2, IDisposable
         void OnRightGripPressed(InputAction.CallbackContext context);
         void OnLeftButtonX(InputAction.CallbackContext context);
         void OnRightButtonA(InputAction.CallbackContext context);
+        void OnLeftMenu(InputAction.CallbackContext context);
     }
 }

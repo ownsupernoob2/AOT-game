@@ -27,6 +27,10 @@ public class GrapplingRope : MonoBehaviour
         {
             Debug.LogError("LineRenderer not found on " + gameObject.name);
         }
+        if (hookManager == null)
+        {
+            Debug.LogWarning("HookManager not assigned on " + gameObject.name);
+        }
         if (waistAnchor == null)
         {
             Debug.LogWarning("Waist anchor not assigned on " + gameObject.name);
@@ -42,9 +46,9 @@ public class GrapplingRope : MonoBehaviour
 
     void DrawRope()
     {
-        if (hookManager == null || waistAnchor == null)
+        if (hookManager == null || waistAnchor == null || lr == null)
         {
-            Debug.LogError("HookManager or waistAnchor not assigned!");
+            Debug.LogWarning($"DrawRope skipped for {(isLeftRope ? "left" : "right")} rope: Missing components.");
             return;
         }
 
@@ -68,6 +72,7 @@ public class GrapplingRope : MonoBehaviour
             }
 
             currentGrapplePosition = Vector3.Lerp(grapplePoint, anchorPosition, t);
+            lr.positionCount = quality + 1;
             for (int i = 0; i < quality + 1; i++)
             {
                 float delta = i / (float)quality;
@@ -101,22 +106,8 @@ public class GrapplingRope : MonoBehaviour
             currentGrapplePosition = anchorPosition;
             springValue = 0f;
             springVelocity = 0f;
-            if (lr.positionCount > 0)
-                lr.positionCount = 0;
+            lr.positionCount = 0;
             return;
-        }
-
-        Vector3[] positions = new Vector3[lr.positionCount];
-        lr.GetPositions(positions);
-        if (isLeftRope)
-        {
-            hookManager.leftHookLine.positionCount = positions.Length;
-            hookManager.leftHookLine.SetPositions(positions);
-        }
-        else
-        {
-            hookManager.rightHookLine.positionCount = positions.Length;
-            hookManager.rightHookLine.SetPositions(positions);
         }
     }
 
