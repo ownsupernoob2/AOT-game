@@ -10,9 +10,15 @@ public class SettingsMenuController : MonoBehaviour
     public Toggle boostSliderToggle;
     public Toggle snapTurnToggle;
     public Toggle tiltToggle;
+    public Toggle vignetteToggle;
+    public GameObject vignette;
     public Button exitButton;
+    public GameObject leftBlade;
+    public GameObject rightBlade;
     public ActionBasedController leftController;
     public PlayerHookManager hookManager;
+    public ContinuousTurnProviderBase continuousTurnProvider;
+    public SnapTurnProviderBase snapTurnProvider;
     private VRControls controls;
     private bool isMenuOpen = false;
 
@@ -24,19 +30,24 @@ public class SettingsMenuController : MonoBehaviour
         if (boostSliderToggle == null) Debug.LogWarning("Boost Slider Toggle not assigned!");
         if (snapTurnToggle == null) Debug.LogWarning("Snap Turn Toggle not assigned!");
         if (tiltToggle == null) Debug.LogWarning("Tilt Toggle not assigned!");
+        if (vignetteToggle == null) Debug.LogWarning("Vignette Toggle not assigned!");
         if (exitButton == null) Debug.LogWarning("Exit Button not assigned!");
         if (leftController == null) Debug.LogWarning("Left Controller not assigned!");
         if (hookManager == null) Debug.LogWarning("Hook Manager not assigned!");
+        if (continuousTurnProvider == null) Debug.LogWarning("Continuous Turn Provider not assigned!");
+        if (snapTurnProvider == null) Debug.LogWarning("Snap Turn Provider not assigned!");
     }
 
     void OnEnable()
     {
         if (controls != null) controls.Enable();
         controls.VR.LeftMenu.performed += _ => ToggleMenu();
+
         if (crosshairToggle != null) crosshairToggle.onValueChanged.AddListener(ToggleCrosshair);
         if (boostSliderToggle != null) boostSliderToggle.onValueChanged.AddListener(ToggleBoostSlider);
         if (snapTurnToggle != null) snapTurnToggle.onValueChanged.AddListener(ToggleSnapTurn);
         if (tiltToggle != null) tiltToggle.onValueChanged.AddListener(ToggleTilt);
+        if (vignetteToggle != null) vignetteToggle.onValueChanged.AddListener(ToggleVignette);
         if (exitButton != null) exitButton.onClick.AddListener(ExitGame);
     }
 
@@ -48,6 +59,7 @@ public class SettingsMenuController : MonoBehaviour
         if (boostSliderToggle != null) boostSliderToggle.onValueChanged.RemoveListener(ToggleBoostSlider);
         if (snapTurnToggle != null) snapTurnToggle.onValueChanged.RemoveListener(ToggleSnapTurn);
         if (tiltToggle != null) tiltToggle.onValueChanged.RemoveListener(ToggleTilt);
+        if (vignetteToggle != null) vignetteToggle.onValueChanged.RemoveListener(ToggleVignette);
         if (exitButton != null) exitButton.onClick.RemoveListener(ExitGame);
     }
 
@@ -63,11 +75,14 @@ public class SettingsMenuController : MonoBehaviour
         if (boostSliderToggle != null) boostSliderToggle.isOn = true;
         if (snapTurnToggle != null) snapTurnToggle.isOn = true;
         if (tiltToggle != null) tiltToggle.isOn = true;
+        if (vignetteToggle != null) vignetteToggle.isOn = true;
     }
 
     void ToggleMenu()
     {
         isMenuOpen = !isMenuOpen;
+        if (leftBlade != null) leftBlade.SetActive(!isMenuOpen);
+        if (rightBlade != null) rightBlade.SetActive(!isMenuOpen);
         if (settingsCanvas != null)
         {
             settingsCanvas.enabled = isMenuOpen;
@@ -101,20 +116,23 @@ public class SettingsMenuController : MonoBehaviour
 
     void ToggleSnapTurn(bool isSnapTurn)
     {
-        if (leftController != null && leftController.GetComponent<ActionBasedController>() != null)
+        if (continuousTurnProvider != null)
         {
-            var turnProvider = FindObjectOfType<ContinuousTurnProviderBase>();
-            if (turnProvider != null)
-            {
-                turnProvider.enabled = !isSnapTurn;
-                Debug.Log($"Turn mode set to {(isSnapTurn ? "snap" : "smooth")}");
-            }
-            var snapTurnProvider = FindObjectOfType<SnapTurnProviderBase>();
-            if (snapTurnProvider != null)
-            {
-                snapTurnProvider.enabled = isSnapTurn;
-                Debug.Log($"Turn mode set to {(isSnapTurn ? "snap" : "smooth")}");
-            }
+            continuousTurnProvider.enabled = !isSnapTurn;
+            Debug.Log($"Continuous turn {(isSnapTurn ? "disabled" : "enabled")}");
+        }
+        else
+        {
+            Debug.LogWarning("ContinuousTurnProvider not assigned in SettingsMenuController!");
+        }
+        if (snapTurnProvider != null)
+        {
+            snapTurnProvider.enabled = isSnapTurn;
+            Debug.Log($"Snap turn {(isSnapTurn ? "enabled" : "disabled")}");
+        }
+        else
+        {
+            Debug.LogWarning("SnapTurnProvider not assigned in SettingsMenuController!");
         }
     }
 
@@ -124,6 +142,16 @@ public class SettingsMenuController : MonoBehaviour
         {
             hookManager.tiltEnabled = isEnabled;
             Debug.Log($"Camera tilt {(isEnabled ? "enabled" : "disabled")}");
+        }
+    }
+
+    void ToggleVignette(bool isEnabled)
+    {
+        if (hookManager != null)
+        {
+            if (vignette != null) vignette.SetActive(isEnabled);
+            hookManager.vignetteEnabled = isEnabled;
+            Debug.Log($"Tunneling vignette {(isEnabled ? "enabled" : "disabled")}");
         }
     }
 
